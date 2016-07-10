@@ -1,0 +1,511 @@
+C51 COMPILER V9.01   MAIN                                                                  02/27/2016 21:35:25 PAGE 1   
+
+
+C51 COMPILER V9.01, COMPILATION OF MODULE MAIN
+OBJECT MODULE PLACED IN main.OBJ
+COMPILER INVOKED BY: D:\Program Files\Keil\C51\BIN\C51.EXE main.c BROWSE DEBUG OBJECTEXTEND
+
+line level    source
+
+   1          
+   2          #include "STC12C5A60S2.h"
+   3          #include "intrins.h" 
+   4          #include "stdio.h"
+   5          #include"uart.h"
+   6          
+   7          #define uchar unsigned char
+   8          #define uint unsigned int
+   9          
+  10          sbit OUT1   =  P4^2;            //输出IO口1，    剑盒5个电缸
+  11          sbit OUT2   =  P1^0;        //输出2，        鼎中的电缸
+  12          sbit OUT3   =  P1^1;            //输出3，        风箱1的灯带
+  13          sbit OUT4   =  P1^2;        //输出4，        风箱2的灯带
+  14          sbit OUT5   =  P1^3;        //输出5，        R3到R4的电磁锁
+  15          sbit OUT6   =  P1^4;            //输出6，        大剑上的小电磁锁
+  16          sbit OUT7   =  P1^5;            //输出7，        
+  17          sbit OUT8   =  P1^6;            //输出8，       
+  18          sbit OUT9   =  P1^7;            //输出9，        
+  19          sbit OUT10  =  P4^3;            //输出10，       
+  20          sbit OUT11  =  P3^2;        //输出11，
+  21          sbit OUT12  =  P3^3;        //输出12，
+  22          
+  23          
+  24          sbit M10     =  P2^6;            //电缸1+                
+  25          sbit M11     =  P2^7;            //电缸1-
+  26          sbit M20     =  P3^4;            //电缸2+
+  27          sbit M21     =  P3^5;            //电缸2-
+  28          sbit M30     =  P3^6;            //电缸3+
+  29          sbit M31     =  P3^7;            //电缸3-
+  30          
+  31          sbit OUT21   =  P4^0;           //输出IO控制口21
+  32          sbit OUT22   =  P2^0;       //输出22
+  33          sbit OUT23   =  P2^1;           //输出23
+  34          sbit OUT24   =  P2^2;       //输出24
+  35          sbit OUT25   =  P2^3;       //输出25
+  36          sbit OUT26   =  P2^4;           //输出26
+  37          sbit OUT27   =  P2^5;           //输出27
+  38          //sbit OUT28   =  P2^6;     电缸控制口复用
+  39          //sbit OUT29   =  P2^7;         电缸控制口复用
+  40          
+  41          sbit INPUT16   =  P4^4;         //输入IO控制口16，   五行5
+  42          sbit INPUT15   =  P4^5;     //输入15，           大剑中的机关，暂定按键
+  43          sbit INPUT14   =  P4^1;         //输入14                        
+  44          sbit INPUT13   =  P4^6;     //输入13                     
+  45          sbit INPUT12   =  P0^7;     //输入12                     
+  46          sbit INPUT11   =  P0^6;         //输入11，按键类型       
+  47          
+  48          sbit INPUT10   =  P0^5;         //输入10，门禁类型       风箱1霍尔
+  49          sbit INPUT9    =  P0^4;         //输入9，门禁            风箱2霍尔
+  50          sbit INPUT8    =  P0^3;         //输入8，门禁            五行1
+  51          sbit INPUT7    =  P0^2;         //输入7，门禁            五行2
+  52          sbit INPUT6    =  P0^1;         //输入6，门禁            五行3
+  53          sbit INPUT5    =  P0^0;     //输入5，门禁类型    五行4
+  54          
+  55          sbit RXD   =  P3^0;         
+C51 COMPILER V9.01   MAIN                                                                  02/27/2016 21:35:25 PAGE 2   
+
+  56          sbit TXD   =  P3^1;
+  57          
+  58          #define uchar unsigned char
+  59          #define uint unsigned int
+  60          
+  61          sfr P4sw=0xbb;
+  62          
+  63          void sys_init(void);
+  64          void delay_ms(int count);
+  65          void mp3_init();
+  66          void mp3(unsigned char comd);
+  67          
+  68          unsigned char Game_Start=0,num1=0,num2=0,i=0,j=0;
+  69          unsigned char flag_step1=0,flag_step2=0,flag_step3=0,flag_step4=0,flag_step5=0,flag_step6=0,flag_step7=0,f
+             -lag_step8=0,flag_step9=0,flag_step10=0;
+  70          unsigned int  flag_num1=1,flag_num2=1;
+  71          
+  72          
+  73          /************************************************************************
+  74              函数名称：   void main(void)                
+  75              函数功能：   
+  76              调用函数：  void delay(unsigned int loop_time)      
+  77          *************************************************************************/
+  78          void main()
+  79          {
+  80   1              sys_init();             
+  81   1              P4sw = 0x70;
+  82   1              mp3(0x33);
+  83   1              mp3(0x01);
+  84   1              delay_ms(500);
+  85   1              mp3(0x33);
+  86   1              mp3(0x01);
+  87   1              delay_ms(500);
+  88   1              mp3(0x33);
+  89   1              mp3(0x01);
+  90   1              delay_ms(500);
+  91   1      
+  92   1              while(1)
+  93   1                {                                     
+  94   2                       
+  95   2                       while(flag_step1==0)
+  96   2                       {
+  97   3                                       if((INPUT10==0)&&(flag_step10==0))                        //风箱的霍尔开关1
+  98   3                                        {
+  99   4                                               delay_ms(50);
+ 100   4                                               if(INPUT10==0)
+ 101   4                                               {
+ 102   5                                                              while(!INPUT10);
+ 103   5                                                                      mp3(0x33);
+ 104   5                                          mp3(0x02);
+ 105   5                                                      flag_num1+=1;
+ 106   5                                                      if(flag_num1<=30)
+ 107   5                                                      {                                               
+ 108   6                                                              OUT3=1;
+ 109   6                                                              delay_ms(150);
+ 110   6                                                              OUT3=0;
+ 111   6                                                      }
+ 112   5                                                      else if(flag_num1>=31)
+ 113   5                                                      {
+ 114   6                                                              OUT3=1;
+ 115   6                                                              num1=1;
+ 116   6                                                                      delay_ms(500);
+C51 COMPILER V9.01   MAIN                                                                  02/27/2016 21:35:25 PAGE 3   
+
+ 117   6                                                                      mp3(0x33);
+ 118   6                                      mp3(0x01); 
+ 119   6                                                                      delay_ms(500);
+ 120   6                                                                      flag_step10=1;
+ 121   6                                                      }
+ 122   5                                               } 
+ 123   4                                        }
+ 124   3                      
+ 125   3                                       if((INPUT9==0)&&(flag_step9==0))                          //风箱的霍尔开关2
+ 126   3                                        {
+ 127   4                                               delay_ms(50);
+ 128   4                                               if(INPUT9==0)
+ 129   4                                               {
+ 130   5                                                      while(!INPUT9);
+ 131   5                                                              mp3(0x33);
+ 132   5                                      mp3(0x02);
+ 133   5                                                      flag_num2+=1;
+ 134   5                                                      if(flag_num2<=30)
+ 135   5                                                      {
+ 136   6                                                              OUT4=1;
+ 137   6                                                                delay_ms(150); 
+ 138   6                                                              OUT4=0;
+ 139   6                                                      }
+ 140   5                                                      else if(flag_num2>=31)
+ 141   5                                                      {
+ 142   6                                                              OUT4=1;                 //灯带2亮
+ 143   6                                                              num2=1;
+ 144   6                                                              delay_ms(500);
+ 145   6                                                                      mp3(0x33);
+ 146   6                                      mp3(0x01);
+ 147   6                                                                      delay_ms(500);
+ 148   6                                                              flag_step9=1;
+ 149   6                                                      }
+ 150   5                                               } 
+ 151   4                                        }
+ 152   3                                      
+ 153   3                                       if((num1==1)&&(num2==1))
+ 154   3                                       {
+ 155   4                                         flag_step1=1;
+ 156   4                                         flag_step2=1;
+ 157   4                                         OUT2=1;         //打开鼎中的电缸
+ 158   4                                         delay_ms(500);
+ 159   4                                         mp3(0x33);
+ 160   4                         mp3(0x08);
+ 161   4                                         delay_ms(8000);
+ 162   4                                         mp3(0x33);
+ 163   4                         mp3(0x01);
+ 164   4                                       }
+ 165   3                       }
+ 166   2      
+ 167   2                       while((flag_step2==1)&&(flag_step3==0))
+ 168   2                       {
+ 169   3                               if((INPUT8==0)&&(flag_step4==0))
+ 170   3                               {
+ 171   4                                 flag_step4=1;
+ 172   4                                 delay_ms(500);
+ 173   4                                 mp3(0x33);
+ 174   4                     mp3(0x03);
+ 175   4                                 delay_ms(500);
+ 176   4                               }
+ 177   3                               if((INPUT7==0)&&(flag_step5==0))
+ 178   3                               {
+C51 COMPILER V9.01   MAIN                                                                  02/27/2016 21:35:25 PAGE 4   
+
+ 179   4                                 flag_step5=1;
+ 180   4                                 delay_ms(500);
+ 181   4                                 mp3(0x33);
+ 182   4                     mp3(0x04);
+ 183   4                                 delay_ms(500);
+ 184   4                               }
+ 185   3                               if((INPUT6==0)&&(flag_step6==0))
+ 186   3                               {
+ 187   4                                 flag_step6=1;
+ 188   4                                 delay_ms(500);
+ 189   4                                 mp3(0x33);
+ 190   4                     mp3(0x05);
+ 191   4                                 delay_ms(500);
+ 192   4                               }
+ 193   3                               if((INPUT5==0)&&(flag_step7==0))
+ 194   3                               {
+ 195   4                                 flag_step7=1;
+ 196   4                                 delay_ms(500);
+ 197   4                                 mp3(0x33);
+ 198   4                     mp3(0x06);
+ 199   4                                 delay_ms(500);
+ 200   4                               }
+ 201   3                               if((INPUT16==0)&&(flag_step8==0))
+ 202   3                               {
+ 203   4                                 flag_step8=1;
+ 204   4                                 delay_ms(500);
+ 205   4                                 mp3(0x33);
+ 206   4                     mp3(0x07);
+ 207   4                                 delay_ms(500);
+ 208   4                               }
+ 209   3      
+ 210   3      
+ 211   3                         
+ 212   3                         
+ 213   3                         if((flag_step4==1)&&(flag_step5==1)&&(flag_step6==1)&&(flag_step7==1)&&(flag_step8==1))
+ 214   3                         {
+ 215   4                               OUT1=1;         //5个电缸升起
+ 216   4                               OUT6=0;         //大剑中的电磁锁打开
+ 217   4                               flag_step3=1;
+ 218   4                               delay_ms(500);
+ 219   4                               mp3(0x33);
+ 220   4                   mp3(0x09);  
+ 221   4                               delay_ms(500);   
+ 222   4                         }
+ 223   3                       }
+ 224   2                       while(flag_step3==1)
+ 225   2                       {
+ 226   3                         if(INPUT15==0)
+ 227   3                         {
+ 228   4                               OUT5=0;   //需要触发一个机关才可以
+ 229   4                         }    
+ 230   3                              
+ 231   3                       }
+ 232   2                                                              
+ 233   2                }                                                                                                       
+ 234   1      }
+ 235                                                                                                                                                                                      
+ 236          void sys_init()
+ 237          {
+ 238   1              P0M1=0X00;
+ 239   1              P0M0=0Xff;      //设置P0为推挽输出
+ 240   1              
+C51 COMPILER V9.01   MAIN                                                                  02/27/2016 21:35:25 PAGE 5   
+
+ 241   1              P1M1=0X00;
+ 242   1              P1M0=0XFF;          //设置P1为推挽输出
+ 243   1              
+ 244   1              P2M1=0X00;
+ 245   1              P2M0=0XFF;              //设置P2口为推挽输出
+ 246   1              
+ 247   1              P3M1=0X00;
+ 248   1              P3M0=0XFC;          //设置P3为推挽输出
+ 249   1      
+ 250   1              P4M1=0X00;
+ 251   1              P4M0=0XFF;      //设置P4为推挽输出
+ 252   1              
+ 253   1                      
+ 254   1              //R1-R5所有电磁锁吸合
+ 255   1              OUT1=0;
+ 256   1              OUT2=0;
+ 257   1              OUT3=0;
+ 258   1              OUT4=0;
+ 259   1              OUT5=1;
+ 260   1              OUT6=1;
+ 261   1                              
+ 262   1              OUT7=0;         //      
+ 263   1              OUT8=0;         //  
+ 264   1              OUT9=0;         //      
+ 265   1              OUT10=0;        //      
+ 266   1      
+ 267   1              
+ 268   1              INPUT16=1;  //接线输入,电话告诉单片机打开R5的门
+ 269   1      
+ 270   1              INPUT15=1;      //电磁锁1反馈
+ 271   1              INPUT14=1; 
+ 272   1              INPUT13=1; 
+ 273   1      
+ 274   1              INPUT11=1;      //激光接收管
+ 275   1              INPUT12=1;
+ 276   1      
+ 277   1              INPUT10=1;
+ 278   1              INPUT9=1;
+ 279   1              INPUT8=1;
+ 280   1              INPUT7=1;
+ 281   1              INPUT6=1;
+ 282   1              INPUT5=1;
+ 283   1                        
+ 284   1              uart_init();               //串口初始化 
+ 285   1              mp3_init();                //MP3初始化  */
+ 286   1      
+ 287   1      }
+ 288          
+ 289          
+ 290          
+ 291          void delay_ms(int count)  // /* X1ms */
+ 292          {
+ 293   1              int i,j;
+ 294   1              for(i=0;i<count;i++)
+ 295   1                      for(j=0;j<1000;j++);
+ 296   1      } 
+ 297          
+ 298          
+ 299          
+ 300          /*********************************************************/
+ 301          /*                                                       */
+ 302          /* MP3操作指令                                           */
+C51 COMPILER V9.01   MAIN                                                                  02/27/2016 21:35:25 PAGE 6   
+
+ 303          /*                                                       */
+ 304          /*********************************************************/
+ 305          void mp3(unsigned char comd)
+ 306          {
+ 307   1        switch(comd)
+ 308   1                {
+ 309   2                  
+ 310   2                  case 0X01: send(0X7E);//指令开始位
+ 311   2                                         send(0X04);//说明指令长度
+ 312   2                                         send(0X42);//指定文件夹播放
+ 313   2                                         send(0X01);//定位到名称为“01”的文件夹
+ 314   2                                         send(0x01);//播放第1个音频文件
+ 315   2                                         send(0XEF);//指令结束位 
+ 316   2                                     break;
+ 317   2                      case 0X02: send(0X7E);//指令开始位
+ 318   2                                         send(0X04);//说明指令长度
+ 319   2                                         send(0X42);//指定文件夹播放
+ 320   2                                         send(0X01);//定位到名称为“01”的文件夹
+ 321   2                                         send(0x02);//播放第2个音频文件
+ 322   2                                         send(0XEF);//指令结束位 
+ 323   2                                     break;
+ 324   2                  case 0X03: send(0X7E);//指令开始位
+ 325   2                                         send(0X04);//说明指令长度
+ 326   2                                         send(0X42);//指定文件夹播放
+ 327   2                                         send(0X01);//定位到名称为“01”的文件夹
+ 328   2                                         send(0x03);//播放第3个音频文件
+ 329   2                                         send(0XEF);//指令结束位 
+ 330   2                                     break;
+ 331   2                      case 0X04: send(0X7E);//指令开始位
+ 332   2                                         send(0X04);//说明指令长度
+ 333   2                                         send(0X42);//指定文件夹播放
+ 334   2                                         send(0X01);//定位到名称为“01”的文件夹
+ 335   2                                         send(0x04);//播放第4个音频文件
+ 336   2                                         send(0XEF);//指令结束位 
+ 337   2                                     break;
+ 338   2                      case 0X05: send(0X7E);//指令开始位
+ 339   2                                         send(0X04);//说明指令长度
+ 340   2                                         send(0X42);//指定文件夹播放
+ 341   2                                         send(0X01);//定位到名称为“01”的文件夹
+ 342   2                                         send(0x05);//播放第5个音频文件
+ 343   2                                         send(0XEF);//指令结束位 
+ 344   2                                     break;
+ 345   2                  case 0X06: send(0X7E);//指令开始位
+ 346   2                                         send(0X04);//说明指令长度
+ 347   2                                         send(0X42);//指定文件夹播放
+ 348   2                                         send(0X01);//定位到名称为“01”的文件夹
+ 349   2                                         send(0x06);//播放第6个音频文件
+ 350   2                                         send(0XEF);//指令结束位 
+ 351   2                                     break;
+ 352   2                      case 0X07: send(0X7E);//指令开始位
+ 353   2                                         send(0X04);//说明指令长度
+ 354   2                                         send(0X42);//指定文件夹播放
+ 355   2                                         send(0X01);//定位到名称为“01”的文件夹
+ 356   2                                         send(0x07);//播放第7个音频文件
+ 357   2                                         send(0XEF);//指令结束位 
+ 358   2                                     break;
+ 359   2                      case 0X08: send(0X7E);//指令开始位
+ 360   2                                         send(0X04);//说明指令长度
+ 361   2                                         send(0X42);//指定文件夹播放
+ 362   2                                         send(0X01);//定位到名称为“01”的文件夹
+ 363   2                                         send(0x08);//播放第8个音频文件
+ 364   2                                         send(0XEF);//指令结束位 
+C51 COMPILER V9.01   MAIN                                                                  02/27/2016 21:35:25 PAGE 7   
+
+ 365   2                                     break;
+ 366   2                  case 0X09: send(0X7E);//指令开始位
+ 367   2                                         send(0X04);//说明指令长度
+ 368   2                                         send(0X42);//指定文件夹播放
+ 369   2                                         send(0X01);//定位到名称为“01”的文件夹
+ 370   2                                         send(0x09);//播放第9个音频文件
+ 371   2                                         send(0XEF);//指令结束位 
+ 372   2                                     break;
+ 373   2                      case 0X0A: send(0X7E);//指令开始位
+ 374   2                                         send(0X04);//说明指令长度
+ 375   2                                         send(0X42);//指定文件夹播放
+ 376   2                                         send(0X01);//定位到名称为“01”的文件夹
+ 377   2                                         send(0x0A);//播放第10个音频文件
+ 378   2                                         send(0XEF);//指令结束位 
+ 379   2                                     break;
+ 380   2                      case 0X0B: send(0X7E);//指令开始位
+ 381   2                                         send(0X04);//说明指令长度
+ 382   2                                         send(0X42);//指定文件夹播放
+ 383   2                                         send(0X01);//定位到名称为“01”的文件夹
+ 384   2                                         send(0x0B);//播放第11个音频文件
+ 385   2                                         send(0XEF);//指令结束位 
+ 386   2                                     break;
+ 387   2                  case 0X0C: send(0X7E);//指令开始位
+ 388   2                                         send(0X04);//说明指令长度
+ 389   2                                         send(0X42);//指定文件夹播放
+ 390   2                                         send(0X01);//定位到名称为“01”的文件夹
+ 391   2                                         send(0x0C);//播放第12个音频文件
+ 392   2                                         send(0XEF);//指令结束位 
+ 393   2                                     break;
+ 394   2                      case 0X0D: send(0X7E);//指令开始位
+ 395   2                                         send(0X04);//说明指令长度
+ 396   2                                         send(0X42);//指定文件夹播放
+ 397   2                                         send(0X01);//定位到名称为“01”的文件夹
+ 398   2                                         send(0x0D);//播放第13个音频文件
+ 399   2                                         send(0XEF);//指令结束位 
+ 400   2                                     break;
+ 401   2                      case 0X0E: send(0X7E);//指令开始位
+ 402   2                                         send(0X04);//说明指令长度
+ 403   2                                         send(0X42);//指定文件夹播放
+ 404   2                                         send(0X01);//定位到名称为“01”的文件夹
+ 405   2                                         send(0x0E);//播放第14个音频文件
+ 406   2                                         send(0XEF);//指令结束位 
+ 407   2                                     break;
+ 408   2                  case 0X0F: send(0X7E);//指令开始位
+ 409   2                                         send(0X04);//说明指令长度
+ 410   2                                         send(0X42);//指定文件夹播放
+ 411   2                                         send(0X01);//定位到名称为“01”的文件夹
+ 412   2                                         send(0x0F);//播放第15个音频文件
+ 413   2                                         send(0XEF);//指令结束位 
+ 414   2                                     break;
+ 415   2      
+ 416   2                      case 0X31: send(0X7E);//指令开始位
+ 417   2                                         send(0X03);//说明指令长度
+ 418   2                                         send(0X31);//设置音量
+ 419   2                                         send(0X20);//20
+ 420   2                                         send(0XEF);//指令结束位 
+ 421   2                                     break;
+ 422   2                      case 0X32: send(0X7E);//指令开始位
+ 423   2                                         send(0X03);//说明指令长度
+ 424   2                                         send(0X31);//设置音量
+ 425   2                                         send(0X10);//20
+ 426   2                                         send(0XEF);//指令结束位 
+C51 COMPILER V9.01   MAIN                                                                  02/27/2016 21:35:25 PAGE 8   
+
+ 427   2                                     break;
+ 428   2      
+ 429   2                      case 0X33: send(0X7E);//指令开始位
+ 430   2                                         send(0X03);//说明指令长度
+ 431   2                                         send(0X33);//设置循环模式
+ 432   2                                         send(0X04);//单曲播放
+ 433   2                                         send(0XEF);//指令结束位 
+ 434   2                                     break;
+ 435   2                      
+ 436   2                      case 0X34: send(0X7E);//指令开始位
+ 437   2                                         send(0X03);//说明指令长度
+ 438   2                                         send(0X33);//设置循环模式
+ 439   2                                         send(0X02);//单曲循环！
+ 440   2                                         send(0XEF);//指令结束位 
+ 441   2                                     break;
+ 442   2                      case 0X35: send(0X7E);//指令开始位
+ 443   2                                         send(0X03);//说明指令长度
+ 444   2                                         send(0X31);//设置音量
+ 445   2                                         send(0X07);//20
+ 446   2                                         send(0XEF);//指令结束位 
+ 447   2                                     break;
+ 448   2                      case 0X36: send(0X7E);//指令开始位
+ 449   2                                         send(0X03);//说明指令长度
+ 450   2                                         send(0X31);//设置音量
+ 451   2                                         send(0X10);//20
+ 452   2                                         send(0XEF);//指令结束位 
+ 453   2                                     break;
+ 454   2                }
+ 455   1        
+ 456   1      }
+ 457          /*********************************************************/
+ 458          /*                                                       */
+ 459          /* MP3初始化                                             */
+ 460          /*                                                       */
+ 461          /*********************************************************/
+ 462          void mp3_init()
+ 463          {
+ 464   1        mp3(0x33);                 //设置循环模式为文件夹循环
+ 465   1        mp3(0x31);                 //设置音量为20
+ 466   1        //mp3(0x00);                 //开机播放
+ 467   1      
+ 468   1        /*不关闭串行中断的话一上电就会发送STOP，这样会影响曲名和播放歌曲的对应关系*/
+ 469   1        ES=0;                                    //串行中断禁止
+ 470   1        delay_ms(100);                           //等待MP3准备好
+ 471   1        ES=1;
+ 472   1      }
+ 473          
+
+
+MODULE INFORMATION:   STATIC OVERLAYABLE
+   CODE SIZE        =   1037    ----
+   CONSTANT SIZE    =   ----    ----
+   XDATA SIZE       =   ----    ----
+   PDATA SIZE       =   ----    ----
+   DATA SIZE        =     20    ----
+   IDATA SIZE       =   ----    ----
+   BIT SIZE         =   ----    ----
+END OF MODULE INFORMATION.
+
+
+C51 COMPILATION COMPLETE.  0 WARNING(S),  0 ERROR(S)

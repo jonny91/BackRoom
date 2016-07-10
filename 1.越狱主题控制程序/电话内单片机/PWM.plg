@@ -1,0 +1,194 @@
+<html>
+<body>
+<pre>
+<h1>礦ision Build Log</h1>
+<h2>Project:</h2>
+E:\资料\超级密室\程序\越狱控制程序\电话内\电话.uvproj
+Project File Date:  06/08/2015
+
+<h2>Output:</h2>
+Build target 'Target 1'
+compiling main.c...
+MAIN.C(108): error C202: 'STEP': undefined identifier
+MAIN.C(112): error C202: 'STEP': undefined identifier
+Target not created
+Build target 'Target 1'
+compiling main.c...
+linking...
+*** WARNING L16: UNCALLED SEGMENT, IGNORED FOR OVERLAY PROCESS
+    SEGMENT: ?PR?_SENDC?MAIN
+Program Size: data=15.0 xdata=0 code=1028
+creating hex file from "PWM"...
+"PWM" - 0 Error(s), 1 Warning(s).
+Build target 'Target 1'
+compiling main.c...
+linking...
+*** WARNING L16: UNCALLED SEGMENT, IGNORED FOR OVERLAY PROCESS
+    SEGMENT: ?PR?_SENDC?MAIN
+Program Size: data=15.0 xdata=0 code=1033
+creating hex file from "PWM"...
+"PWM" - 0 Error(s), 1 Warning(s).
+Build target 'Target 1'
+compiling main.c...
+linking...
+*** WARNING L16: UNCALLED SEGMENT, IGNORED FOR OVERLAY PROCESS
+    SEGMENT: ?PR?_SENDC?MAIN
+Program Size: data=15.0 xdata=0 code=1024
+creating hex file from "PWM"...
+"PWM" - 0 Error(s), 1 Warning(s).
+Build target 'Target 1'
+compiling main.c...
+MAIN.C(124): error C202: 'PICK_UP': undefined identifier
+MAIN.C(133): error C202: 'PICK_UP': undefined identifier
+MAIN.C(136): error C202: 'PICK_UP': undefined identifier
+MAIN.C(141): error C202: 'PICK_UP': undefined identifier
+MAIN.C(150): error C202: 'PICK_UP': undefined identifier
+MAIN.C(153): error C202: 'PICK_UP': undefined identifier
+MAIN.C(166): error C202: 'PICK_UP': undefined identifier
+MAIN.C(176): error C202: 'PICK_UP': undefined identifier
+Target not created
+Build target 'Target 1'
+compiling main.c...
+linking...
+*** WARNING L16: UNCALLED SEGMENT, IGNORED FOR OVERLAY PROCESS
+    SEGMENT: ?PR?_SENDC?MAIN
+Program Size: data=16.0 xdata=0 code=1053
+creating hex file from "PWM"...
+"PWM" - 0 Error(s), 1 Warning(s).
+Build target 'Target 1'
+compiling main.c...
+linking...
+*** WARNING L16: UNCALLED SEGMENT, IGNORED FOR OVERLAY PROCESS
+    SEGMENT: ?PR?_SENDC?MAIN
+Program Size: data=16.0 xdata=0 code=1053
+creating hex file from "PWM"...
+"PWM" - 0 Error(s), 1 Warning(s).
+Build target 'Target 1'
+compiling main.c...
+linking...
+*** WARNING L16: UNCALLED SEGMENT, IGNORED FOR OVERLAY PROCESS
+    SEGMENT: ?PR?_SENDC?MAIN
+Program Size: data=16.0 xdata=0 code=1046
+creating hex file from "PWM"...
+"PWM" - 0 Error(s), 1 Warning(s).
+Build target 'Target 1'
+compiling main.c...
+linking...
+*** WARNING L16: UNCALLED SEGMENT, IGNORED FOR OVERLAY PROCESS
+    SEGMENT: ?PR?_SENDC?MAIN
+Program Size: data=16.0 xdata=0 code=1046
+creating hex file from "PWM"...
+"PWM" - 0 Error(s), 1 Warning(s).
+Build target 'Target 1'
+compiling main.c...
+linking...
+*** WARNING L16: UNCALLED SEGMENT, IGNORED FOR OVERLAY PROCESS
+    SEGMENT: ?PR?_SENDC?MAIN
+Program Size: data=16.0 xdata=0 code=1046
+creating hex file from "PWM"...
+"PWM" - 0 Error(s), 1 Warning(s).
+Build target 'Target 1'
+compiling main.c...
+linking...
+*** WARNING L16: UNCALLED SEGMENT, IGNORED FOR OVERLAY PROCESS
+    SEGMENT: ?PR?_SENDC?MAIN
+Program Size: data=16.0 xdata=0 code=1046
+creating hex file from "PWM"...
+"PWM" - 0 Error(s), 1 Warning(s).
+Build target 'Target 1'
+compiling main.c...
+linking...
+*** WARNING L16: UNCALLED SEGMENT, IGNORED FOR OVERLAY PROCESS
+    SEGMENT: ?PR?_SENDC?MAIN
+Program Size: data=16.0 xdata=0 code=1046
+creating hex file from "PWM"...
+"PWM" - 0 Error(s), 1 Warning(s).
+Build target 'Target 1'
+compiling main.c...
+linking...
+*** WARNING L16: UNCALLED SEGMENT, IGNORED FOR OVERLAY PROCESS
+    SEGMENT: ?PR?_SENDC?MAIN
+Program Size: data=16.0 xdata=0 code=1046
+creating hex file from "PWM"...
+"PWM" - 0 Error(s), 1 Warning(s).
+Build target 'Target 1'
+compiling main.c...
+MAIN.C(125): error C202: 'i': undefined identifier
+MAIN.C(140): error C202: 'i': undefined identifier
+MAIN.C(162): error C202: 'i': undefined identifier
+MAIN.C(245): error C141: syntax error near '}'
+Target not created
+Build target 'Target 1'
+compiling main.c...
+MAIN.C(125): error C202: 'i': undefined identifier
+MAIN.C(140): error C202: 'i': undefined identifier
+MAIN.C(162): error C202: 'i': undefined identifier
+Target not created
+Build target 'Target 1'
+compiling main.c...
+linking...
+*** WARNING L16: UNCALLED SEGMENT, IGNORED FOR OVERLAY PROCESS
+    SEGMENT: ?PR?_SENDC?MAIN
+Program Size: data=19.0 xdata=0 code=1263
+creating hex file from "PWM"...
+"PWM" - 0 Error(s), 1 Warning(s).
+Build target 'Target 1'
+compiling main.c...
+MAIN.C(237): error C141: syntax error near 'void'
+MAIN.C(243): error C141: syntax error near 'else'
+MAIN.C(243): error C141: syntax error near '==', expected ')'
+MAIN.C(243): error C141: syntax error near '==', expected ')'
+MAIN.C(245): error C279: 'num': multiple initialization
+MAIN.C(245): error C231: 'num': redefinition
+MAIN.C(246): error C141: syntax error near '}'
+MAIN.C(247): error C141: syntax error near '==', expected ')'
+MAIN.C(247): error C141: syntax error near '!=', expected ')'
+MAIN.C(247): error C141: syntax error near '==', expected ')'
+MAIN.C(249): error C279: 'num': multiple initialization
+MAIN.C(251): error C141: syntax error near '}'
+MAIN.C(252): error C141: syntax error near '==', expected ')'
+MAIN.C(252): error C141: syntax error near '!=', expected ')'
+MAIN.C(252): error C141: syntax error near '==', expected ')'
+MAIN.C(254): error C279: 'num': multiple initialization
+MAIN.C(255): error C141: syntax error near '}'
+Target not created
+Build target 'Target 1'
+compiling main.c...
+linking...
+*** WARNING L16: UNCALLED SEGMENT, IGNORED FOR OVERLAY PROCESS
+    SEGMENT: ?PR?_SENDC?MAIN
+Program Size: data=19.0 xdata=0 code=1073
+creating hex file from "PWM"...
+"PWM" - 0 Error(s), 1 Warning(s).
+Build target 'Target 1'
+compiling main.c...
+linking...
+*** WARNING L16: UNCALLED SEGMENT, IGNORED FOR OVERLAY PROCESS
+    SEGMENT: ?PR?_SENDC?MAIN
+Program Size: data=19.0 xdata=0 code=1073
+creating hex file from "PWM"...
+"PWM" - 0 Error(s), 1 Warning(s).
+Build target 'Target 1'
+compiling main.c...
+linking...
+*** WARNING L16: UNCALLED SEGMENT, IGNORED FOR OVERLAY PROCESS
+    SEGMENT: ?PR?_SENDC?MAIN
+Program Size: data=19.0 xdata=0 code=1073
+creating hex file from "PWM"...
+"PWM" - 0 Error(s), 1 Warning(s).
+Build target 'Target 1'
+compiling main.c...
+linking...
+*** WARNING L16: UNCALLED SEGMENT, IGNORED FOR OVERLAY PROCESS
+    SEGMENT: ?PR?_SENDC?MAIN
+Program Size: data=19.0 xdata=0 code=1073
+creating hex file from "PWM"...
+"PWM" - 0 Error(s), 1 Warning(s).
+Build target 'Target 1'
+compiling main.c...
+linking...
+*** WARNING L16: UNCALLED SEGMENT, IGNORED FOR OVERLAY PROCESS
+    SEGMENT: ?PR?_SENDC?MAIN
+Program Size: data=19.0 xdata=0 code=1073
+creating hex file from "PWM"...
+"PWM" - 0 Error(s), 1 Warning(s).
